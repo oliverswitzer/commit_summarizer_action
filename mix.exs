@@ -22,6 +22,7 @@ defmodule CommitSummarizerAction.MixProject do
     [
       {:httpoison, "~> 1.8"},
       {:jason, "~> 1.2"},
+      {:req, "~> 0.4"},
       {:oauth2, "~> 2.0"}
     ]
   end
