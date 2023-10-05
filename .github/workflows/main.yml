@@ -1,0 +1,18 @@
+name: Elixir App Workflow
+
+on:
+  push:
+    branches-ignore:    
+      - main
+
+jobs:
+  run_commit_summarizer:
+    runs-on: ubuntu-latest
+    name: Run Elixir App
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Run Elixir App
+      uses: oliverswitzer/commit-summarizer-action@master
+      with:
+        openai_api_key: ${{ secrets.OPENAI_API_KEY }}

@@ -1,0 +1,5 @@
+name: 'Commit Summarizer Action'
+description: 'Runs the commit summarizer' 
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
