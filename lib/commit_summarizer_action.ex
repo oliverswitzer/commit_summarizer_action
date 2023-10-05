@@ -1,0 +1,2 @@
+defmodule CommitSummarizerAction do
+end
