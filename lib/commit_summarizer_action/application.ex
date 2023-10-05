@@ -1,12 +1,10 @@
 defmodule CommitSummarizerAction.Application do
   use Application
 
-  def start(_type, _args) do
-    children = [
-      CommitSummarizerAction.Watcher
-    ]
+  def start(_type, args) do
+    parsed = OptionParser.parse(args, switches: [diff: :string, repo: :string])
 
-    opts = [strategy: :one_for_one, name: CommitSummarizerAction.Supervisor]
-    Supervisor.start_link(children, opts)
+    # Start the GenServer with the diff as an initial state
+    CommitSummarizerAction.Watcher.start_link(parsed)
   end
 end

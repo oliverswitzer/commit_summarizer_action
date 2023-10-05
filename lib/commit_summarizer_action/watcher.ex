@@ -6,15 +6,18 @@ defmodule CommitSummarizerAction.Watcher do
     GenServer.start_link(__MODULE__, opts, name: __MODULE__)
   end
 
-  def init(_opts) do
-    {:ok, %{}}
+  def init(opts) do
+    diff = Keyword.get(opts, :diff)
+    repo = Keyword.get(opts, :repo)
+    {:ok, %{diff: diff, repo: repo}}
   end
 
-  def handle_info({:commit, commit}, state) do
+  def handle_info({:commit, commit}, %{diff: diff, repo: repo}) do
     if commit_contains_keyword?(commit) do
       branch = get_branch(commit)
+
       unless branch == "main" do
-        pr = PR.create(branch)
+        pr = PR.create(branch, repo)
         diff = Diff.get(commit)
         summary = Summary.generate(diff)
         Comment.post(pr, summary)
